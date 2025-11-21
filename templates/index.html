@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" style="scroll-padding-top: 5rem;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devopinfra | AWS Tactical DevOps</title>
+    <meta name="description" content="Accelerating AWS cloud adoption with automation-first solutions.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>♾️</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            800: '#1E40AF', // Tactical Blue
+                            900: '#1e3a8a',
+                        },
+                        gray: {
+                            50: '#f9fafb',
+                            700: '#374151', // Tactical Gray
+                            800: '#1f2937',
+                            900: '#111827',
+                        }
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #e5e7eb 1px, transparent 1px), linear-gradient(to bottom, #e5e7eb 1px, transparent 1px)",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for a more techy feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .modal-open {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-white antialiased flex flex-col min-h-screen">
+
+    <!-- Instagram Brand Gradient Definition -->
+    <svg width="0" height="0" style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+      <defs>
+        <linearGradient id="instagram-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#f09433" />
+          <stop offset="25%" stop-color="#e6683c" />
+          <stop offset="50%" stop-color="#dc2743" />
+          <stop offset="75%" stop-color="#cc2366" />
+          <stop offset="100%" stop-color="#bc1888" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full bg-gradient-to-r from-blue-700 via-indigo-900 to-blue-700 border-b border-white/10 z-40 shadow-xl transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer group" onclick="window.scrollTo(0,0)">
+                    <!-- Standard DevOps Infinity Icon -->
+                    <svg class="w-10 h-10 text-white mr-3 drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18.6 6.62c-1.44 0-2.8.56-3.77 1.53L12 10.66 9.17 8.15A5.32 5.32 0 0 0 5.4 6.62C2.42 6.62 0 9.04 0 12s2.42 5.38 5.4 5.38c1.44 0 2.8-.56 3.77-1.53l2.83-2.5 2.83 2.5c.97.97 2.33 1.53 3.77 1.53 2.98 0 5.4-2.42 5.4-5.38s-2.42-5.38-5.4-5.38zM5.4 15.38c-1.86 0-3.38-1.52-3.38-3.38s1.52-3.38 3.38-3.38c.9 0 1.76.35 2.4 1l-2.4 2.4 2.4 2.4c-.64.65-1.5 1-2.4 1zm13.2 0c-.9 0-1.76-.35-2.4-1l2.4-2.4-2.4-2.4c.64-.65 1.5-1 2.4-1 1.86 0 3.38 1.52 3.38 3.38s-1.52 3.38-3.38 3.38z"/>
+                    </svg>
+                    <span class="text-2xl font-extrabold text-white tracking-tight drop-shadow-sm">Devopinfra</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-sm font-medium text-blue-100 hover:text-white transition-colors">Mission</a>
+                    <a href="#services" class="text-sm font-medium text-blue-100 hover:text-white transition-colors">Services</a>
+                    <a href="#use-cases" class="text-sm font-medium text-blue-100 hover:text-white transition-colors">Use Cases</a>
+                    <!-- Instagram Icon in Nav - Wrapped in white circle for visibility -->
+                    <a href="https://instagram.com/devopinfra.shop" target="_blank" rel="noopener noreferrer" class="group" aria-label="Instagram">
+                        <div class="bg-white rounded-full p-1.5 hover:scale-110 transition-transform duration-200 shadow-lg shadow-indigo-500/30">
+                            <svg class="w-5 h-5" fill="url(#instagram-gradient)" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465C9.673 2.013 10.03 2 12.315 2zm-2.008 2H12.3c2.347 0 2.712.01 3.593.05.752.035 1.203.15 1.49.262.38.147.69.35.99.649.298.3.502.61.649.99.112.288.227.739.262 1.49.04.88.05 1.246.05 3.593v.025c0 2.346-.01 2.712-.05 3.593-.035.752-.15 1.203-.262 1.49-.147.38-.35.69-.649.99-.3.298-.61.502-.99.649-.288-.112.739-.227 1.49-.262.88-.04 1.246-.05 3.593-.05zm1.346 3.85a4.15 4.15 0 110 8.3 4.15 4.15 0 010-8.3zM11.65 7.7a2.3 2.3 0 100 4.6 2.3 2.3 0 000-4.6zm7.402-3.203a1.225 1.225 0 110 2.45 1.225 1.225 0 010-2.45z" clip-rule="evenodd" />
+                    </svg>
+                    Instagram
+                </a>
+                <a href="#contact" class="block px-3 py-2 text-base font-bold text-white bg-blue-700 hover:bg-blue-600 rounded-md">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    <div class="fixed top-24 right-5 z-50 w-full max-w-sm">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="{% if category == 'success' %}bg-green-50 border-l-4 border-green-500 text-green-700{% else %}bg-red-50 border-l-4 border-red-500 text-red-700{% endif %} p-4 shadow-lg rounded-r mb-4 transition-all duration-500 ease-in-out opacity-100 transform translate-x-0 flex justify-between items-center" role="alert">
+                <span>{{ message }}</span>
+                <button onclick="this.parentElement.remove()" class="text-sm font-bold ml-2">&times;</button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 lg:pt-44 lg:pb-32 relative overflow-hidden">
+        <!-- Tech Grid Background -->
+        <div class="absolute inset-0 bg-white">
+            <div class="absolute inset-0 bg-grid-pattern [background-size:40px_40px] opacity-[0.05]"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-white"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-block px-3 py-1 mb-6 text-xs font-semibold tracking-wider text-brand-800 uppercase bg-blue-50 rounded-full border border-blue-100">
+                AWS • DevOps • SRE
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6 leading-tight">
+                Tactical AWS Automation <br class="hidden md:block" />
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-800 to-brand-900">For Modern Startups</span>
+            </h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+                We replace manual infrastructure with code. Get production-ready <strong>AWS environments</strong> in days, designed to scale as you grow.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#contact" class="px-8 py-4 bg-brand-800 text-white text-base font-bold rounded-lg hover:bg-brand-900 transition-all shadow-lg hover:shadow-brand-800/30 transform hover:-translate-y-0.5">
+                    Deploy Faster
+                </a>
+                <a href="#services" class="px-8 py-4 bg-white text-gray-700 border border-gray-200 text-base font-bold rounded-lg hover:bg-gray-50 hover:text-brand-800 transition-all shadow-sm hover:shadow-md">
+                    Explore Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission / About Section -->
+    <section id="about" class="py-20 bg-gray-50 border-y border-gray-200/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Mission Critical Engineering</h2>
+                    
+                    <!-- Brief Team / Startup Story -->
+                    <div class="mb-6">
+                         <h3 class="text-lg font-bold text-brand-800 mb-2 uppercase tracking-wide text-xs">Who We Are</h3>
+                         <p class="text-gray-600 text-lg leading-relaxed">
+                            Devopinfra was founded by a collective of senior Site Reliability Engineers and Cloud Architects who saw a recurring pattern: brilliant startups failing because their infrastructure couldn't keep pace with their innovation.
+                        </p>
+                    </div>
+
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        We aren't just an agency; we are your tactical operations team. We have scaled unicorns and defended against massive traffic spikes on AWS. Our mission is to embed that resilience into your company from Day One.
+                    </p>
+
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <strong>Zero Manual Ops:</strong> Everything is code.
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <strong>Veteran Expertise:</strong> Built by ex-SREs.
+                        </li>
+                        <li class="flex items-center text-gray-700">
+                            <svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <strong>AWS Certified:</strong> Scalable architectures.
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <div class="p-4 bg-blue-50 rounded-xl">
+                            <div class="text-2xl font-bold text-brand-800">100%</div>
+                            <div class="text-sm text-gray-600 mt-1">IaC Coverage</div>
+                        </div>
+                        <div class="p-4 bg-blue-50 rounded-xl">
+                            <div class="text-2xl font-bold text-brand-800">24/7</div>
+                            <div class="text-sm text-gray-600 mt-1">AWS Monitoring</div>
+                        </div>
+                        <div class="col-span-2 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <div class="text-sm font-mono text-gray-500">git push -> build -> test -> deploy to AWS</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-brand-800 font-bold tracking-wider uppercase text-xs">Capabilities</span>
+                <h2 class="mt-2 text-3xl font-bold text-gray-900">Technical Solutions</h2>
+                <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Click on any card below to learn how we implement these solutions.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div onclick="openModal('infra')" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-brand-800/30 transition-all duration-300 cursor-pointer group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <svg class="w-5 h-5 text-brand-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="w-14 h-14 bg-gray-50 text-brand-800 rounded-xl flex items-center justify-center mb-6 border border-gray-100 group-hover:bg-brand-800 group-hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-brand-800">Infrastructure Automation</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Terraform for AWS, Kubernetes (EKS), and CI/CD pipelines designed for velocity.</p>
+                    <div class="mt-4 text-brand-800 text-sm font-semibold flex items-center">
+                        Learn more <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div onclick="openModal('cloud')" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-brand-800/30 transition-all duration-300 cursor-pointer group relative overflow-hidden">
+                     <div class="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <svg class="w-5 h-5 text-brand-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="w-14 h-14 bg-gray-50 text-brand-800 rounded-xl flex items-center justify-center mb-6 border border-gray-100 group-hover:bg-brand-800 group-hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-brand-800">AWS Cloud Setup</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">AWS Landing Zones, Control Tower, and scalable VPC architectures.</p>
+                    <div class="mt-4 text-brand-800 text-sm font-semibold flex items-center">
+                        Learn more <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div onclick="openModal('opt')" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:border-brand-800/30 transition-all duration-300 cursor-pointer group relative overflow-hidden">
+                     <div class="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <svg class="w-5 h-5 text-brand-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="w-14 h-14 bg-gray-50 text-brand-800 rounded-xl flex items-center justify-center mb-6 border border-gray-100 group-hover:bg-brand-800 group-hover:text-white transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-brand-800">Optimization</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">24/7 Monitoring, AWS Cost Explorer strategies, and CloudWatch alerts.</p>
+                    <div class="mt-4 text-brand-800 text-sm font-semibold flex items-center">
+                        Learn more <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="use-cases" class="py-20 bg-gray-50 border-y border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-brand-800 font-bold tracking-wider uppercase text-xs">Proven Results</span>
+                <h2 class="mt-2 text-3xl font-bold text-gray-900">Real World Scenarios</h2>
+                <p class="mt-4 text-gray-600 max-w-2xl mx-auto">How we help innovative startups scale on AWS.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Case 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <div class="text-brand-800 font-bold mb-2 uppercase text-xs tracking-wide">Fintech Compliance</div>
+                    <h4 class="text-lg font-bold text-gray-900 mb-2">SOC2 Ready Infrastructure</h4>
+                    <p class="text-gray-600 text-sm">Implemented strict AWS IAM policies, encrypted S3 storage, and CloudTrail audit logging to help a fintech startup pass SOC2.</p>
+                </div>
+                <!-- Case 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <div class="text-brand-800 font-bold mb-2 uppercase text-xs tracking-wide">High-Traffic Scale</div>
+                    <h4 class="text-lg font-bold text-gray-900 mb-2">Surviving Black Friday</h4>
+                    <p class="text-gray-600 text-sm">Designed an auto-scaling AWS EKS cluster that handled a 500% traffic spike during sales events with zero downtime.</p>
+                </div>
+                <!-- Case 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <div class="text-brand-800 font-bold mb-2 uppercase text-xs tracking-wide">Cost Optimization</div>
+                    <h4 class="text-lg font-bold text-gray-900 mb-2">Slashing Cloud Bills</h4>
+                    <p class="text-gray-600 text-sm">Audited an existing AWS setup and reduced monthly spend by 40% through EC2 spot instances and rightsizing resources.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-white relative">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-900">Start Your Project</h2>
+                <p class="mt-2 text-gray-600">Ready to automate your AWS infrastructure? Connect with us.</p>
+                
+                <!-- Prominent Contact Links -->
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-6 mt-6">
+                    <a href="mailto:contact@devopinfra.shop" class="flex items-center text-brand-800 font-bold hover:underline bg-blue-50 px-4 py-2 rounded-full border border-blue-100 transition-transform hover:-translate-y-0.5">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        contact@devopinfra.shop
+                    </a>
+                    <!-- Enhanced Instagram Button for visibility -->
+                    <a href="https://instagram.com/devopinfra.shop" target="_blank" rel="noopener noreferrer" class="flex items-center text-brand-800 font-bold hover:underline bg-blue-50 px-6 py-3 rounded-full border border-blue-100 transition-transform hover:-translate-y-0.5 shadow-sm group">
+                         <div class="bg-white rounded-full p-1 mr-3 shadow-sm group-hover:scale-110 transition-transform">
+                             <svg class="w-6 h-6" fill="url(#instagram-gradient)" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465C9.673 2.013 10.03 2 12.315 2zm-2.008 2H12.3c2.347 0 2.712.01 3.593.05.752.035 1.203.15 1.49.262.38.147.69.35.99.649.298.3.502.61.649.99.112.288.227.739.262 1.49.04.88.05 1.246.05 3.593v.025c0 2.346-.01 2.712-.05 3.593-.035.752-.15 1.203-.262 1.49-.147.38-.35.69-.649.99-.3.298-.61.502-.99.649-.288-.112.739-.227 1.49-.262.88-.04 1.246-.05 3.593-.05zm1.346 3.85a4.15 4.15 0 110 8.3 4.15 4.15 0 010-8.3zM11.65 7.7a2.3 2.3 0 100 4.6 2.3 2.3 0 000-4.6zm7.402-3.203a1.225 1.225 0 110 2.45 1.225 1.225 0 010-2.45z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <div class="h-4 w-px bg-gray-300 mx-2"></div>
+                <a href="#" onclick="openModal('privacy'); return false;" class="hover:text-brand-800">Privacy</a>
+                <a href="#" onclick="openModal('terms'); return false;" class="hover:text-brand-800">Terms</a>
+                <span>&copy; 2025 Devopinfra.shop</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Service Modal (Hidden by default) -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 hidden transition-opacity duration-300 opacity-0" onclick="closeModal()"></div>
+    <div id="modal-panel" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-full max-w-lg rounded-2xl shadow-2xl z-50 hidden p-8 transition-all duration-300 scale-95 opacity-0 border border-gray-100">
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="mb-4">
+            <div class="w-12 h-12 bg-brand-100 text-brand-800 rounded-lg flex items-center justify-center mb-4">
+                <svg id="modal-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </div>
+            <h3 id="modal-title" class="text-2xl font-bold text-gray-900">Service Title</h3>
+        </div>
+        <div id="modal-content" class="text-gray-600 leading-relaxed space-y-4">
+            <!-- Content injected via JS -->
+        </div>
+        <div class="mt-8 pt-6 border-t border-gray-100 flex justify-end">
+            <a href="#contact" onclick="closeModal()" class="text-brand-800 font-semibold text-sm hover:underline">Discuss this &rarr;</a>
+        </div>
+    </div>
+
+    <script>
+        // Modal Data
+        const modalData = {
+            'infra': {
+                title: 'Infrastructure Automation',
+                content: `
+                    <p>We move you away from manual console clicks to fully automated Infrastructure as Code (IaC).</p>
+                    <ul class="list-disc list-inside mt-3 space-y-2 text-sm">
+                        <li><strong>Terraform/OpenTofu:</strong> Deterministic state management for AWS resources.</li>
+                        <li><strong>AWS EKS:</strong> Production-ready Kubernetes cluster setup with Helm charts.</li>
+                        <li><strong>CI/CD:</strong> GitHub Actions pipelines deploying directly to AWS.</li>
+                        <li><strong>Self-Healing:</strong> Auto-scaling groups that recover automatically from failure.</li>
+                    </ul>
+                `
+            },
+            'cloud': {
+                title: 'AWS Cloud Setup',
+                content: `
+                    <p>Setting up a new cloud environment requires foresight. We implement industry-standard AWS Landing Zones.</p>
+                     <ul class="list-disc list-inside mt-3 space-y-2 text-sm">
+                        <li><strong>Control Tower:</strong> Multi-account governance using AWS Organizations.</li>
+                        <li><strong>Networking:</strong> VPC peering, Transit Gateway, and subnet tiering.</li>
+                        <li><strong>Security:</strong> IAM Identity Center (SSO) and Service Control Policies (SCPs).</li>
+                        <li><strong>Serverless:</strong> AWS Lambda and Fargate implementations for scalable workloads.</li>
+                    </ul>
+                `
+            },
+            'opt': {
+                title: 'Optimization & Observability',
+                content: `
+                    <p>You cannot improve what you cannot measure. We implement deep observability stacks.</p>
+                    <ul class="list-disc list-inside mt-3 space-y-2 text-sm">
+                        <li><strong>Monitoring:</strong> CloudWatch, Datadog, and Prometheus dashboards.</li>
+                        <li><strong>Logging:</strong> Centralized log aggregation via CloudWatch Logs.</li>
+                        <li><strong>Cost Control:</strong> AWS Cost Explorer analysis and Savings Plans strategies.</li>
+                        <li><strong>Performance:</strong> Load testing and database query optimization (RDS/Aurora).</li>
+                    </ul>
+                `
+            },
+            'privacy': {
+                title: 'Privacy Policy',
+                content: '<p>At Devopinfra, we take your privacy seriously. We only collect information necessary to communicate with you regarding your project inquiries. We do not sell or share your data with third parties.</p><p class="mt-4 text-sm">This is a placeholder privacy policy for demonstration purposes.</p>'
+            },
+            'terms': {
+                title: 'Terms of Service',
+                content: '<p>By using our services, you agree to our standard consulting terms. All code provided is licensed for your use upon payment. We guarantee our infrastructure setups for 30 days post-handover.</p><p class="mt-4 text-sm">This is a placeholder terms of service for demonstration purposes.</p>'
+            }
+        };
+
+        function openModal(key) {
+            const data = modalData[key];
+            if(!data) return;
+
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-content').innerHTML = data.content;
+            
+            const backdrop = document.getElementById('modal-backdrop');
+            const panel = document.getElementById('modal-panel');
+            
+            // Show
+            backdrop.classList.remove('hidden');
+            panel.classList.remove('hidden');
+            
+            // Animate in (small delay to allow display:block to register)
+            setTimeout(() => {
+                backdrop.classList.remove('opacity-0');
+                panel.classList.remove('opacity-0', 'scale-95');
+                panel.classList.add('opacity-100', 'scale-100');
+            }, 10);
+            
+            document.body.classList.add('modal-open');
+        }
+
+        function closeModal() {
+            const backdrop = document.getElementById('modal-backdrop');
+            const panel = document.getElementById('modal-panel');
+            
+            // Animate out
+            backdrop.classList.add('opacity-0');
+            panel.classList.remove('opacity-100', 'scale-100');
+            panel.classList.add('opacity-0', 'scale-95');
+            
+            setTimeout(() => {
+                backdrop.classList.add('hidden');
+                panel.classList.add('hidden');
+                document.body.classList.remove('modal-open');
+            }, 300);
+        }
+        
+        // Close on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
